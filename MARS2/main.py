@@ -36,6 +36,18 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
+@app.route("/answer")
+@app.route("/auto_answer")
+def answer():
+    params = {"title": "Что-то пишу",
+              "surname": "Chill",
+              "name": "Nick",
+              "education": "high",
+              "profession": "programmer",
+              "sex": "man",
+              "motivation": "+",
+              "ready": True}
+    return render_template("auto_answer.html", params=params)
 
 
 if __name__ == "__main__":
