@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Оформление каюты</h2>
+<table>
+    <tr>
+        <td>Цвет стен</td>
+        <td>Эмблема</td>
+    </tr>
+    <tr>
+        {% if gender == "male" %}
+            <div><td bgcolor="blue"></td></div>
+        {% else %}
+            <div><td bgcolor="red"></td></div>
+        {% endif %}
+
+
+        <td>{{age}}</td>
+    </tr>
+
+
+</table>
+{% endblock %}

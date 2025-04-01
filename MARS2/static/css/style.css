@@ -6,3 +6,19 @@ h4 {
 h2 {
     text-align: center;
 }
+
+table {
+    text-align: center;
+    alignment: center;
+    margin: auto;
+}
+
+th {
+    background-color: darkgrey;
+    width: 300px;
+}
+
+table, td, th {
+  /* задаем границу для всех элементов */
+  border: 3px solid #245488;
+}
