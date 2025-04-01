@@ -33,7 +33,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         return redirect('/')
-    return render_template('login.html', title='Авторизация', form=form)
+    return render_template('login.html', title='Аварийный доступ', form=form)
 
 
 @app.route("/answer")
