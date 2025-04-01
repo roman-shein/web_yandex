@@ -50,5 +50,11 @@ def answer():
     return render_template("auto_answer.html", params=params)
 
 
+@app.route("/distribution")
+def distribution():
+    names = ["Рома", "Гоша", "Ваня", "Никита", "Коля"]
+    return render_template("distribution.html", params=names)
+
+
 if __name__ == "__main__":
     app.run(port=8080, host='127.0.0.1')
