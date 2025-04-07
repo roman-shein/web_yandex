@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect
 from loginform import LoginForm
+from change_image import ChangeImage
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -60,6 +61,18 @@ def distribution():
 def table(gender, age):
     return render_template("table.html", gender=gender, age=age)
 
+
+@app.route("/carousel", methods=["GET", "POST"])
+def carousel():
+    form = ChangeImage()
+    if form.validate_on_submit():
+        f = form.image.data
+        f.save(f"static/image/{f.filename}")
+        arr.append(f.filename)
+    return render_template("carousel.html", form=form, arr=arr)
+
+
+arr = ["mars.jpg", "mars1.jpg", "mars2.jpg"]
 
 if __name__ == "__main__":
     app.run(port=8080, host='127.0.0.1')
