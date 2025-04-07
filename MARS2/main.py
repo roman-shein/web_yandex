@@ -1,6 +1,8 @@
 from flask import Flask, render_template, redirect
 from loginform import LoginForm
 from change_image import ChangeImage
+import json
+from random import choice
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -70,6 +72,15 @@ def carousel():
         f.save(f"static/image/{f.filename}")
         arr.append(f.filename)
     return render_template("carousel.html", form=form, arr=arr)
+
+
+@app.route("/member")
+def member():
+    with open("templates/people.json", 'r', encoding="utf8") as fin:
+        data = json.load(fin)
+    people = choice(data["people"])
+    prof = ', '.join(sorted(people["list_prof"]))
+    return render_template("member.html", people=people, prof=prof)
 
 
 arr = ["mars.jpg", "mars1.jpg", "mars2.jpg"]
