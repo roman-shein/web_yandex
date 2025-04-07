@@ -158,6 +158,9 @@ def load_photo():
                     <label for="photo">Выберите файл</label>
                     <input type="file" class="form-control-file" id="photo" name="file">
                 </div>
+                <div>
+                <img src='static\image\input.jpg' alt="Ничего не выбрано">
+                </div>
                 <button type="submit" class="btn btn-primary">Отправить</button>
             </form>
             </div>
@@ -188,7 +191,9 @@ def load_photo():
                     <label for="photo">Выберите файл</label>
                     <input type="file" class="form-control-file" id="photo" name="file">
                 </div>
+                <div>
                 <img src='static\image\input.jpg' alt="Ничего не выбрано">
+                </div>
                 <button type="submit" class="btn btn-primary">Отправить</button>
             </form>
             </div>
