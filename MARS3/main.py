@@ -7,6 +7,7 @@ import json
 from random import choice
 from data.users import User
 from data.jobs import Jobs
+from data.departments import Department
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -14,7 +15,7 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 def main():
     db_session.global_init("db/blogs.db")
-    # app.run(port=8080, host='127.0.0.1')
+    app.run(port=8080, host='127.0.0.1')
     db_sess = db_session.create_session()
     # people = [
     #     {"surname": "Scott",
@@ -65,15 +66,39 @@ def main():
     #
     #     db_sess.add(user)
     #     db_sess.commit()
-    jobs = Jobs()
-    jobs.team_leader = 1
-    jobs.job = "deployment of residential modules 1 and 2"
-    jobs.work_size = 15
-    jobs.collaborators = "2, 3"
-    jobs.start_date = datetime.datetime.now()
-    jobs.is_finished = False
-    db_sess.add(jobs)
-    db_sess.commit()
+    #
+    # jobs = Jobs()
+    # jobs.team_leader = 1
+    # jobs.job = "deployment of residential modules 1 and 2"
+    # jobs.work_size = 15
+    # jobs.collaborators = "2, 3"
+    # jobs.start_date = datetime.datetime.now()
+    # jobs.is_finished = False
+    # db_sess.add(jobs)
+    # db_sess.commit()
+    #
+    # department = Department()
+    # department.title = "Геологическая разведка"
+    # department.chief = 1
+    # department.members = "2, 3, 4, 5"
+    # department.email = "eovwuowb@email.org"
+    # db_sess.add(department)
+    # db_sess.commit()
+
+    # people = {}
+    # for person in list(map(int, db_sess.query(Department).filter(Department.id == 1).first().members.split(", "))):
+    #     people[person] = 0
+    #
+    # jobs = db_sess.query(Jobs).all()
+    # for job in jobs:
+    #     for id in list(map(int, job.collaborators.split(", "))):
+    #         if id in people:
+    #             people[id] += job.work_size
+    #
+    # for key, val in people.items():
+    #     if val > 25:
+    #         res = db_sess.query(User).filter(User.id == key).first()
+    #         print(res.surname, res.name)
 
 
 @app.route("/answer")
@@ -121,6 +146,13 @@ def member():
     people = choice(data["people"])
     prof = ', '.join(sorted(people["list_prof"]))
     return render_template("member.html", people=people, prof=prof)
+
+
+@app.route("/")
+def main_window():
+    db_sess = db_session.create_session()
+    works = db_sess.query(Jobs).all()
+    return render_template("works.html", works=works)
 
 
 if __name__ == '__main__':

@@ -8,6 +8,7 @@ h2 {
 }
 
 table {
+    width: 1110px;
     text-align: center;
     alignment: center;
     margin: auto;
@@ -30,3 +31,5 @@ table, td, th {
   margin-left: auto;
   margin-right: auto;
 }
+
+
