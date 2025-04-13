@@ -1,0 +1,35 @@
+h4 {
+    color: #ff0000;
+    padding-left: 20px;
+}
+
+h2 {
+    text-align: center;
+}
+
+table {
+    width: 1110px;
+    text-align: center;
+    alignment: center;
+    margin: auto;
+}
+
+th {
+    background-color: darkgrey;
+    width: 300px;
+}
+
+table, td, th {
+  /* задаем границу для всех элементов */
+  border: 3px solid #245488;
+}
+
+.carousel-inner img {
+  display: block;
+  height: 500px !important;
+  width: 500px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+

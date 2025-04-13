@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for el in params %}
+    <ol>{{el}}: {{params[el]}}</ol>
+    {% endfor %}
+{% endblock %}
