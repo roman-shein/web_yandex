@@ -10,6 +10,7 @@ from random import choice
 from data.users import User
 from data.jobs import Jobs
 from data.departments import Department
+from data.categories import Categories
 from forms.user import RegisterForm
 from forms.jobs import JobsForm
 from forms.departments import DepartmentsForm
@@ -74,12 +75,18 @@ def main():
     #     db_sess.add(user)
     #     db_sess.commit()
     #
+    # cat = Categories()
+    # cat.title = "test1"
+    # db_sess.add(cat)
+    # db_sess.commit()
+    #
     # jobs = Jobs()
     # jobs.team_leader = 1
     # jobs.job = "deployment of residential modules 1 and 2"
     # jobs.work_size = 15
     # jobs.collaborators = "2, 3"
     # jobs.start_date = datetime.datetime.now()
+    # jobs.hazard_cat = 1
     # jobs.is_finished = False
     # db_sess.add(jobs)
     # db_sess.commit()
@@ -214,6 +221,7 @@ def edit_departments(id):
                            title='Редактирование департамента',
                            form=form, err="")
 
+
 @app.route("/delete_department/<int:id>", methods=["GET", "POST"])
 @login_required
 def delete_departments(id):
@@ -238,6 +246,7 @@ def add_job():
         job.job = form.job.data
         job.work_size = form.work_size.data
         job.collaborators = form.collaborators.data
+        job.hazard_cat = form.hazard_cat.data
         job.is_finished = form.is_finished.data
         db_sess.add(job)
         db_sess.commit()
@@ -259,6 +268,7 @@ def edit_job(id):
             form.job.data = jobs.job
             form.work_size.data = jobs.work_size
             form.collaborators.data = jobs.collaborators
+            form.hazard_cat.data = jobs.hazard_cat
             form.is_finished.data = jobs.is_finished
         else:
             abort(404)
@@ -272,6 +282,7 @@ def edit_job(id):
             jobs.job = form.job.data
             jobs.work_size = form.work_size.data
             jobs.collaborators = form.collaborators.data
+            jobs.hazard_cat = form.hazard_cat.data
             jobs.is_finished = form.is_finished.data
             db_sess.commit()
             return redirect('/')

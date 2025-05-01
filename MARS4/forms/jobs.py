@@ -9,5 +9,6 @@ class JobsForm(FlaskForm):
     team_leader_id = IntegerField("team leader id", validators=[DataRequired()])
     work_size = IntegerField("work size", validators=[DataRequired()])
     collaborators = StringField("collaborators", validators=[DataRequired()])
+    hazard_cat = IntegerField("hazard category", validators=[DataRequired()])
     is_finished = BooleanField("is finished")
     submit = SubmitField("Add")
