@@ -2,7 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, IntegerField, DateField
 from wtforms import BooleanField, SubmitField
 from wtforms.validators import DataRequired
-from time import time
 
 
 class JobsForm(FlaskForm):
