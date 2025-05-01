@@ -1,4 +1,4 @@
-from requests import get, post, delete
+from requests import get, post, delete, put
 
 
 # task 3 (тестирование обработчиков для получения работ)
@@ -17,3 +17,13 @@ from requests import get, post, delete
 #                                                    "hazard_cat": 1,
 #                                                    "is_finished": True}).json())  # корректный запрос
 # print(get("http://localhost:8080/api/jobs").json())
+
+# task 7 (тестирование удаления)
+# print(delete("http://localhost:8080/api/jobs/111").json())  # некорректный запрос
+# print(delete("http://localhost:8080/api/jobs/4").json())  # корректный запрос
+# print(get("http://localhost:8080/api/jobs").json())
+
+# task 9 (тестирование редактирования)
+print(put("http://localhost:8080/api/jobs/999", json={}).json())  # некорректный запрос
+print(put("http://localhost:8080/api/jobs/3", json={"ccc": "fsii"}).json())  # некорректный запрос (несуществующее поле)
+print(put("http://localhost:8080/api/jobs/3", json={"job": "test 3"}).json())  # корректный запрос
