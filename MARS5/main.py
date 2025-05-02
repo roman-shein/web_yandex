@@ -1,5 +1,6 @@
 import datetime
 
+import requests
 from flask import Flask, render_template, redirect, request, abort, make_response, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from loginform import LoginForm
@@ -14,6 +15,7 @@ from data.categories import Categories
 from forms.user import RegisterForm
 from forms.jobs import JobsForm
 from forms.departments import DepartmentsForm
+from requests import get
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -371,7 +373,8 @@ def register():
             position=form.position.data,
             speciality=form.speciality.data,
             address=form.address.data,
-            modified_date=datetime.datetime.now()
+            modified_date=datetime.datetime.now(),
+            city_from=form.city_from.data
         )
         user.set_password(form.password.data)
         db_sess.add(user)
@@ -388,6 +391,43 @@ def not_found(error):
 @app.errorhandler(400)
 def bad_request(_):
     return make_response(jsonify({"error": "Bad Request"}), 400)
+
+
+@app.route("/users_show/<int:user_id>")
+def get_city(user_id):
+    user = get(f"http://localhost:8080/api/users/{user_id}").json()
+    if "error" in user:
+        return """<h1>404</h1>
+<h2>Not Found</h2>"""
+    elif user["user"]["city_from"] is None:
+        return render_template("users_show.html", user=user["user"], err="City is not specify")
+    geocoder_api_server = "http://geocode-maps.yandex.ru/1.x/"
+    static_api_server = "https://static-maps.yandex.ru/v1"
+    geocoder_params = {
+        "apikey": "cf79098a-155e-47b7-9b49-b55b4461472d",
+        "geocode": user["user"]["city_from"],
+        "format": "json"
+    }
+    response = requests.get(geocoder_api_server, params=geocoder_params)
+    if not response:
+        return """<h1>404</h1>
+<h2>Not Found</h2>"""
+    # print(response.json(), file=open("res.json", 'w', encoding="utf8"))
+    json_response = response.json()
+    ll = json_response["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]["Point"]["pos"].split()
+    ll = ",".join(ll)
+    delta = "0.075"
+    static_api_params = {
+        "ll": ll,
+        "spn": ','.join([delta, delta]),
+        "apikey": "318965a9-b51c-41fb-a672-2acad73bc050"
+    }
+    response = requests.get(static_api_server, params=static_api_params)
+    map_file = "static/image/map.png"
+    with open(map_file, "wb") as file:
+        file.write(response.content)
+
+    return render_template("users_show.html", user=user["user"], err='')
 
 
 if __name__ == '__main__':

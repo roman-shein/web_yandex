@@ -16,7 +16,7 @@ def get_users():
     return jsonify(
         {
             "users": [user.to_dict(
-                only=["id", "surname", "name", "age", "email"]
+                only=["id", "surname", "name", "age", "email", "city_from"]
             ) for user in users]
         }
     )
@@ -30,7 +30,7 @@ def get_one_user(user_id):
         return make_response(jsonify({"error": "Not Found"}), 404)
     return jsonify(
         {
-            "user": user.to_dict(only=["id", "surname", "name", "age", "email"])
+            "user": user.to_dict(only=["id", "surname", "name", "age", "email", "city_from"])
         }
     )
 
@@ -40,7 +40,7 @@ def create_user():
     if not request.json:
         return make_response(jsonify({"error": "Empty Request"}), 400)
     elif not all(key in request.json for key in [
-        "surname", "name", "age", "email", "hashed_password"
+        "surname", "name", "age", "email", "hashed_password", "city_from"
     ]):
         return make_response(jsonify({"error": "Bad Request"}), 400)
     db_sess = db_session.create_session()
@@ -48,7 +48,8 @@ def create_user():
         name=request.json["name"],
         surname=request.json["surname"],
         age=request.json["age"],
-        email=request.json["email"]
+        email=request.json["email"],
+        city_from=request.json["city_from"]
     )
     user.set_password(request.json["hashed_password"])
     db_sess.add(user)
@@ -71,7 +72,7 @@ def delete_user(user_id):
 def edit_user(user_id):
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.id == user_id).first()
-    keys = ["surname", "name", "age", "email", "hashed_password"]
+    keys = ["surname", "name", "age", "email", "hashed_password", "city_from"]
     if not user:
         return make_response(jsonify({"error": "Not Found"}), 404)
     elif not all(key in keys for key in request.json.keys()):
