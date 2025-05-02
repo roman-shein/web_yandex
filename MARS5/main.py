@@ -394,6 +394,7 @@ def bad_request(_):
 
 
 @app.route("/users_show/<int:user_id>")
+@login_required
 def get_city(user_id):
     user = get(f"http://localhost:8080/api/users/{user_id}").json()
     if "error" in user:
