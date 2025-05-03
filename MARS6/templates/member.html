@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>
+    {{ people["name"] }} {{ people["surname"] }}
+</h3>
+
+<div>
+    <img src="/static/image/{{people['src']}}" alt="...">
+</div>
+
+<div>
+    {{ prof }}
+</div>
+{% endblock %}

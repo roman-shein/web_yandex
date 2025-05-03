@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Список профессий</h3>
+{% if mark == 'ol' %}
+    <ol>
+{% else %}
+    <ul>
+{% endif %}
+
+{% for item in list_prof %}
+    <li>{{ item }}</li>
+{% endfor %}
+
+{% if mark == 'ol' %}
+    </ol>
+{% else %}
+    </ul>
+{% endif %}
+{% endblock %}
