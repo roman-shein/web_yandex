@@ -18,6 +18,7 @@ from forms.departments import DepartmentsForm
 from requests import get
 from flask_restful import reqparse, abort, Api, Resource
 from data.users_resource import UsersResource, UsersListResource
+from data.jobs_resource import JobsResource, JobsListResource
 
 app = Flask(__name__)
 api = Api(app)
@@ -32,6 +33,8 @@ def main():
     app.register_blueprint(users_api.blueprint)
     api.add_resource(UsersResource, "/api/v2/users/<int:user_id>")
     api.add_resource(UsersListResource, "/api/v2/users")
+    api.add_resource(JobsResource, "/api/v2/jobs/<int:job_id>")
+    api.add_resource(JobsListResource, "/api/v2/jobs")
     app.run(port=8080, host='127.0.0.1')
     db_sess = db_session.create_session()
     # people = [
